@@ -31,7 +31,8 @@ I enjoy very much using Dafny in this project. However, there are some experienc
 * The semantics {: inductive n} is not very clear. 
 * Choose the native-supported abstract data type if possible (e.g. set/seq, for performance and axiom consistent reasons), and define our own only when necessary.
 * There are various of hidden experimental features of Dafny. I recommend the following resources to get to know them:
-   * The [blog of lexicalscope](http://www.lexicalscope.com/blog/).
+   * The papers of K. Rustan M. Leino [(Click)](http://research.microsoft.com/en-us/um/people/leino/papers.html).
+   * The blog of Tim Wood [lexicalscope](http://www.lexicalscope.com/blog/).
    * The [Dafny community](https://dafny.codeplex.com/discussions).
 
 
