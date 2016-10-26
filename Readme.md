@@ -21,18 +21,18 @@ Repository structure
 Dafny heads-up:
 =====
 I enjoy very much using Dafny in this project. However, there are some experience I want to share with people. Hopefully, we can work out some of them in the near future to improve Dafny.
-  	- Dafny is naturally incomplete (a trade-off for its automation), e.g.
-		- Dafny does not encode all the axioms for lists (for performance reason I think). For example, Dafny does not know that for list concatenation, A+B+C <==> A+(B+C).
-		- Some features of Dafny is based on pattern matching (e.g. triggers). Do not get surprised if we have to rewrite a formula to trigger the matching. 
-	- Unlike Boogie, Dafny don't support global axioms directly. Some work around is required to encode inductive predicate.
-	- When a proof depends on an inductively defined abstract data type, it would be nice to automatically expand the definition of abstract data type to locate which case cause the proof unverified. 
-	- Be careful with the match expression, the formal parameter can conflict with the case's constructor fields without error message.
-	- It would be really nice if we can know which lemma is useful/suitable in the current context.
-	- The semantics {: inductive n} is not very clear. 
-	- Choose the native-supported abstract data type if possible (e.g. set/seq, for performance and axiom consistent reasons), and define our own only when necessary.
-	- There are various of hidden experimental features of Dafny. I recommend the following resources to get to know them:
-		- The [blog of lexicalscope](http://www.lexicalscope.com/blog/).
-		- The [Dafny community](https://dafny.codeplex.com/discussions).
+* Dafny is naturally incomplete (a trade-off for its automation), e.g.
+   * Dafny does not encode all the axioms for lists (for performance reason I think). For example, Dafny does not know that for list concatenation, A+B+C <==> A+(B+C).
+   * Some features of Dafny is based on pattern matching (e.g. triggers). Do not get surprised if we have to rewrite a formula to trigger the matching. 
+* Unlike Boogie, Dafny don't support global axioms directly. Some work around is required to encode inductive predicate.
+* When a proof depends on an inductively defined abstract data type, it would be nice to automatically expand the definition of abstract data type to locate which case cause the proof unverified. 
+* Be careful with the match expression, the formal parameter can conflict with the case's constructor fields without error message.
+* It would be really nice if we can know which lemma is useful/suitable in the current context.
+* The semantics {: inductive n} is not very clear. 
+* Choose the native-supported abstract data type if possible (e.g. set/seq, for performance and axiom consistent reasons), and define our own only when necessary.
+* There are various of hidden experimental features of Dafny. I recommend the following resources to get to know them:
+   * The [blog of lexicalscope](http://www.lexicalscope.com/blog/).
+   * The [Dafny community](https://dafny.codeplex.com/discussions).
 
 
 Contact
