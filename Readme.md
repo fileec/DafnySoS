@@ -1,56 +1,42 @@
-* Author: Zheng Cheng
-* Date: 2014.10
+Overview
+=====
+The goal of this project is using the Dafny verification language to specify the design of a toy imperative language (WHILE-like). The design includes the syntax, small step operational semantics, type system and proof system of the language. Consequently, we can enjoy the verification capability of Dafny to prove theorem/lemma such as type soundness by stepping, the soundness of proof system.
 
 
-This is my current attempt to model a IMP-like proof system, and prove its soundness (all in Dafny). The goal is to develop a tool-kit for similar activities (e.g. prove the soundness of ASM proof system), and benefit the proof for the transformation's operational correctness. 
+Repository structure
+=====
+	- DataStructure.dfy : Aux data structures used in this project.
+	- SyntaxSharp.dfy	: Syntax of WHILE.
+	- SemanticsSharp.dfy: Small step operational semantics of WHILE.
+	- TypeSharp.dfy		: Type system of WHILE.
+	- Substitution.dfy	: Define substitution rules for term and formula.
+	- HoareLogic.dfy	: Define |= {p} S {q}, semantics entailment.
+	- Proofs			: Proofs for WHILE 
+		- ProofSemantics.dfy	# proof for stepping.
+		- ProofType.dfy			# proof for type soundness.
+		- ProofSubst.dfy		# proof for substitution.
+		- ProofHoare.dfy		# proof Hoare logic is sound with respect to the operational semantics of WHILE.
 
 
-* Repository structure
-	- DataStructure.dfy # Aux data structures used in this project.
-	- SyntaxSharp.dfy	# Syntax of IMP
-	- SemanticsSharp.dfy# Semantics of IMP
-	- TypeSharp.dfy		# Type system of IMP
-	- Substitution.dfy	# Define substitution rules for term and formula
-	- HoareLogic.dfy	# Define |= {p} S {q}, semantics entailment
-	- Proofs			# Proofs PL properties for IMP 
-		- ProofSemantics.dfy
-		- ProofType.dfy			# Lemma for type soundness.
-		- ProofSubst.dfy		# Lemma for substitution.
-		- ProofHoare.dfy		# Prove Hoare logic is sound with respect to operational semantics of IMP.
-
-* Technical Problems:
-	- How to encode inductive predicate of Coq nicely.
-		- Dafny don't support axioms.
-		- This is not a big problem, just out of curiosity of the essence of inductive predicate.
-		
-* Technical justification. There are several reasons that why a theorem is not discharged automatically:
-	- The formula needs rewriting, the following helps:
-		- rewrite A && B to B && A
-		- Unfold the function definition
-		- A+B+C to A+(B+C)
-	- Exchange between functional and relational definitions, to see which one is better.
-			- functional avoid existence quantifier
-			- relational avoid it to be 'total'
-	- Exchange between data types definition, e.g. local stack is better defined as stack rather than map.
-	- The data structures involved in the formula is inductively defined, which needs a structural case analysis (destruct) to locate which case cause the problem.
-		- In this case, the trace/error messages from Dafny sometimes helped.
-	- Forget to apply proved lemma.
-	
-	
-* Useful features of Dafny:
-	- {:verify false} means not verify the current method/function.
-	- Proving forall x :: P(x) ==> Q(x)
-	- Opaque functions in Dafny 
-
-	
-
-* Dafny heads-up:
+Dafny heads-up:
+=====
+I enjoy very much using Dafny in this project. However, there are some experience I want to share with people. Hopefully, we can work out some of them in the near future to improve Dafny.
+  	- Dafny is naturally incomplete (a trade-off for its automation), e.g.
+		- Dafny does not encode all the axioms for lists (for performance reason I think). For example, Dafny does not know that for list concatenation, A+B+C <==> A+(B+C).
+		- Some features of Dafny is based on pattern matching (e.g. triggers). Do not get surprised if we have to rewrite a formula to trigger the matching. 
+	- Unlike Boogie, Dafny don't support global axioms directly. Some work around is required to encode inductive predicate.
+	- When a proof depends on an inductively defined abstract data type, it would be nice to automatically expand the definition of abstract data type to locate which case cause the proof unverified. 
 	- Be careful with the match expression, the formal parameter can conflict with the case's constructor fields without error message.
-	- No automatic lemma application finding. 
-	- Don't rely on {: inductive n} too much. 
-	- No recompilation in Dafny, e.g. in <syntax>, add Flet expression, in <type>, not add Flet expression. In the <prooftype>, which depends on <type>, still acts like the Flet not being added.
-	
+	- It would be really nice if we can know which lemma is useful/suitable in the current context.
+	- The semantics {: inductive n} is not very clear. 
+	- Choose the native-supported abstract data type if possible (e.g. set/seq, for performance and axiom consistent reasons), and define our own only when necessary.
+	- There are various of hidden experimental features of Dafny. I recommend the following resources to get to know them:
+		- The [blog of lexicalscope](http://www.lexicalscope.com/blog/).
+		- The [Dafny community](https://dafny.codeplex.com/discussions).
 
 
+Contact
+=====
+> Zheng Cheng: cz0590@gmail.com
 
 
